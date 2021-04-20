@@ -10,7 +10,7 @@ try {
   fetch(`${base_url}?${url_params.toString()}`, {
     method: "GET",
     headers: new Headers({
-      "x-api-key": core.getInput("unique_key"),
+      "x-api-key": core.getInput("access_token"),
       "x-github-repo": `${github.context.repo.owner}/${github.context.repo.repo}`,
     }),
   })

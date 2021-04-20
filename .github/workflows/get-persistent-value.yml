@@ -9,14 +9,14 @@ jobs:
         id: set_persistent_value_step
         uses: aaimio/set-persistent-value@master
         with:
-          unique_key: ${{ secrets.UNIQUE_KEY }}
+          access_token: ${{ secrets.ACCESS_TOKEN }}
           key: set_persistent_value_test
           value: "This is a test value"
       - name: Get a persistent value
         id: get_persistent_value_step
         uses: aaimio/get-persistent-value@master
         with:
-          unique_key: ${{ secrets.UNIQUE_KEY }}
+          access_token: ${{ secrets.ACCESS_TOKEN }}
           key: set_persistent_value_test
       - name: Return a persistent value
         run: echo "The returned value is '${{ steps.get_persistent_value_step.outputs.value }}'"
