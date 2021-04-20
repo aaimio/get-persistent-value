@@ -6,18 +6,22 @@ Also see [aaimio/set-persistent-value](https://github.com/aaimio/set-persistent-
 
 This action gets a value that persists through GitHub Actions jobs, steps, or workflows.
 
+- Get a hash that you can use for comparison, e.g. to execute some logic if a file hash has changed.
+- Get a URL that's required in other steps, jobs, or workflows, e.g. getting a Vercel deployment URL to run a Lighthouse report on.
+- Get a boolean value to keep track of whether something was executed or not, e.g. to make sure some logic only runs once.
+
 # Configuration
 
 This action takes the below inputs:
 
-- `unique_key`: Use `curl` to generate a one (or visit the URL directly):
+- `unique_key`: Use `curl` to generate one (or simply [visit the URL](https://persistent.aaim.io/api/values/new_unique_key?output=plain) directly):
   - After generating, add the unique key as a GitHub secret for your repo (e.g. `PERSISTENT_VALUE_UNIQUE_KEY`).
 
 ```bash
 $ curl https://persistent.aaim.io/api/values/new_unique_key?output=plain
 ```
 
-- `key`: An identifier with which you can retrieve the persistent value
+- `key`: An identifier with which you can retrieve the persistent value.
 
 
 # Set a persistent value
