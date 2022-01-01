@@ -1,8 +1,8 @@
 name: "Get persistent value"
 description: "Gets a value that persists through GitHub Actions jobs and workflows."
 branding:
-  icon: 'download'
-  color: 'orange'
+  icon: "download"
+  color: "orange"
 inputs:
   access_token:
     description: "Your access token (see README.md on how to get one)."
@@ -10,6 +10,9 @@ inputs:
   key:
     description: "The key to retrieve the value with."
     required: true
+  default:
+    description: "A default value that will be returned if the input key does not exist."
+    required: false
 outputs:
   value:
     description: "The value that was stored."
