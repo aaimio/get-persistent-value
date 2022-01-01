@@ -1,6 +1,6 @@
 {
   "name": "get-persistent-value",
-  "version": "1.0.0",
+  "version": "1.1.1",
   "description": "Gets a value that persists through GitHub Actions jobs and workflows.",
   "main": "index.js",
   "scripts": {
