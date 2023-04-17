@@ -1,5 +1,5 @@
-import * as core from "@actions/core";
-import * as github from "@actions/github";
+import { getInput, setOutput, setFailed } from "@actions/core";
+import { context } from "@actions/github";
 import axios, { AxiosError, AxiosResponse } from "axios";
 import { URLSearchParams } from "url";
 
@@ -11,33 +11,31 @@ interface ApiResponse {
 
 try {
   const base_url = "https://persistent.aaim.io/api/values/get";
-  const url_params = new URLSearchParams({ key: core.getInput("key") });
+  const url_params = new URLSearchParams({ key: getInput("key") });
 
   axios
     .get(`${base_url}?${url_params.toString()}`, {
       headers: {
-        "x-api-key": core.getInput("access_token"),
-        "x-github-repo": `${github.context.repo.owner}/${github.context.repo.repo}`,
+        "x-api-key": getInput("access_token"),
+        "x-github-repo": `${context.repo.owner}/${context.repo.repo}`,
       },
     })
     .then((json: AxiosResponse<ApiResponse>) => {
-      core.setOutput("value", json.data.data);
+      setOutput("value", json.data.data);
     })
     .catch((error: AxiosError) => {
-      if (error.response) {
-        if (error.response.status === 404) {
-          const defaultValue = core.getInput("default");
+      if (error.response && error.response.status === 404) {
+        const defaultValue = getInput("default");
 
-          if (defaultValue !== undefined) {
-            core.setOutput("value", defaultValue);
-            return;
-          }
+        if (defaultValue !== undefined) {
+          setOutput("value", defaultValue);
+          return;
         }
       }
 
-      core.setFailed(error);
+      setFailed(error);
     });
 } catch (error) {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  core.setFailed(error as any);
+  console.error(error);
+  setFailed(error as Error);
 }
